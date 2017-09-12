@@ -1,0 +1,21 @@
+{
+  "versions": [{
+    "version": 1,
+    "description": "initial config",
+    "commands": [
+
+    ],
+    "check": {
+      "config": "ls tsconfig.json"
+    }
+  },{
+    "version": 2,
+    "description": "install npm package",
+    "commands": [
+
+    ],
+    "check": {
+      "installed": "npm ls typescript"
+    }
+  }]
+}
