@@ -1,0 +1,14 @@
+{
+  "name": "dev-tool-apply",
+  "version": "0.1.0",
+  "description": "Apply quality tools and address other cross-cutting concerns in your projects",
+  "main": "src/dev-tools-apply.js",
+  "bin": {
+    "dta": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
+  "license": "MIT"
+}
