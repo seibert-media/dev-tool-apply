@@ -1,9 +1,8 @@
 const fs = require("fs");
 const _ = require("lodash");
 
-const execSync = require("child_process").execSync;
-
-const confirm = require('./utils/confirm');
+const confirm = require("./utils/confirm");
+const runCommand = require("./utils/runCommand");
 
 const modulesPath = __dirname + "/modules/";
 
@@ -29,17 +28,17 @@ module.exports = {
 
 		console.log(`\n  .:: ${moduleName} ::.`);
 
-
 		confirm(`  Check module ${moduleName}`, () => {
 			const moduleVersions = moduleDefinition.versions;
 
 			moduleVersions.forEach(function (moduleVersion) {
 				console.log(`\n  check version ${moduleVersion.version} - ${moduleVersion.description}`);
 				_.forEach(moduleVersion.check, (command, checkDescription) => {
-					try {
-						execSync(command);
+					const result = runCommand(command);
+
+					if (result.status === 0) {
 						console.log(`✓ check successful - ${checkDescription} (${moduleName})`);
-					} catch(e) {
+					} else {
 						console.log(`✗ check failed - ${checkDescription} (${moduleName})`);
 					}
 				});
