@@ -29,10 +29,8 @@ module.exports = {
 		console.log(`\n  .:: ${moduleName} ::.`);
 
 		confirm(`  Check module ${moduleName}`, () => {
-			const moduleVersions = moduleDefinition.versions;
-
-			moduleVersions.forEach(function (moduleVersion) {
-				console.log(`\n  check version ${moduleVersion.version} - ${moduleVersion.description}`);
+			moduleDefinition.applySteps.forEach((moduleVersion) => {
+				console.log(`\n  check step - ${moduleVersion.description}`);
 				_.forEach(moduleVersion.check, (command, checkDescription) => {
 					const result = runCommand(command);
 
