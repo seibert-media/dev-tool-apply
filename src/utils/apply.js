@@ -17,6 +17,7 @@ class ApplyStep {
 
 	check() {
 		console.log(`\n  check step - ${this.description}`);
+		let failingChecks = 0;
 
 		_.forEach(this.checks, (checkComand, checkDescription) => {
 			const result = runCommand(checkComand);
@@ -26,8 +27,15 @@ class ApplyStep {
 				console.log(`✓ check successful - ${infoString}`);
 			} else {
 				console.log(`✗ check failed - ${infoString}`);
+				failingChecks++;
 			}
 		});
+
+		return failingChecks;
+	}
+
+	applyCommands() {
+		this.commands.forEach(runCommand);
 	}
 }
 
@@ -46,6 +54,16 @@ class ApplyModule {
 	check() {
 		this.applySteps.forEach((applyStep) => {
 			applyStep.check();
+		});
+	}
+
+	checkAndApply(failingCallback) {
+		this.applySteps.forEach((applyStep) => {
+			const failingChecks = applyStep.check();
+
+			if (failingChecks) {
+				failingCallback(applyStep);
+			}
 		});
 	}
 }
