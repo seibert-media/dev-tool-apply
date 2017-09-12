@@ -1,10 +1,6 @@
-const readline = require('readline');
+const readlineSync = require('readline-sync');
 
 function confirm(question, action) {
-	const readlineInterface = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout
-	});
 
 	const inputHint = "[y/n]";
 	const allowedValues = "yYnN".split("");
@@ -13,16 +9,14 @@ function confirm(question, action) {
 	const questionText = `${question} ${inputHint} `;
 
 	function askForConfirmation() {
-		readlineInterface.question(questionText, (answer) => {
-			if (allowedValues.indexOf(answer) < 0) {
-				askForConfirmation();
-			} else {
-				readlineInterface.close();
-				if (confirmingValues.indexOf(answer) >= 0) {
-					action()
-				}
+		const answer = readlineSync.question(questionText);
+		if (allowedValues.indexOf(answer) < 0) {
+			askForConfirmation();
+		} else {
+			if (confirmingValues.indexOf(answer) >= 0) {
+				action()
 			}
-		});
+		}
 	}
 
 	askForConfirmation();

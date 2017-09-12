@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.4",
-    "preconditions": "^2.2.0"
+    "preconditions": "^2.2.0",
+    "readline-sync": "^1.4.7"
   }
 }
