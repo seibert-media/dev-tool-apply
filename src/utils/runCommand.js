@@ -1,10 +1,15 @@
 const execSync = require("child_process").execSync;
 
-module.exports = function runCommand(command) {
+const stdioTypes = {
+	default: [0],
+	log: [0,1,2]
+};
+
+module.exports = function runCommand(command, stdioType = "default") {
 	try {
 		execSync(command, {
 			encoding: 'utf-8',
-			stdio: [0]
+			stdio: stdioTypes[stdioType]
 		});
 		return {
 			status: 0

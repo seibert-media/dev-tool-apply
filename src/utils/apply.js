@@ -16,7 +16,6 @@ class ApplyStep {
 	}
 
 	check() {
-		console.log(`\n  check step - ${this.description}`);
 		let failingChecks = 0;
 
 		_.forEach(this.checks, (checkComand, checkDescription) => {
@@ -35,7 +34,9 @@ class ApplyStep {
 	}
 
 	applyCommands() {
-		this.commands.forEach(runCommand);
+		this.commands.forEach((command) => {
+			runCommand(command, 'log');
+		});
 	}
 }
 

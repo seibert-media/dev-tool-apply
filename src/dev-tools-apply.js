@@ -60,6 +60,8 @@ module.exports = {
 			module.checkAndApply((applyStepWithFailedChecks) => {
 				confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`, () => {
 					applyStepWithFailedChecks.applyCommands();
+					console.log(`\n  rerun checks for step - ${applyStepWithFailedChecks.description}`);
+					applyStepWithFailedChecks.check();
 				});
 			});
 		});
