@@ -1,8 +1,9 @@
-
 const fs = require("fs");
 const _ = require("lodash");
 
 const execSync = require("child_process").execSync;
+
+const confirm = require('./utils/confirm');
 
 const modulesPath = __dirname + "/modules/";
 
@@ -20,21 +21,28 @@ module.exports = {
 			return;
 		}
 
+		const moduleDefinition = modules[moduleName];
+		if (moduleName !== moduleDefinition.name) {
+			console.error(`Give module name (${moduleName}) and name attribute from apply.json (${moduleDefinition.name}) do not match.`);
+			return;
+		}
+
 		console.log(`\n  .:: ${moduleName} ::.`);
 
-		const moduleDefinition = modules[moduleName];
 
-		const moduleVersions = moduleDefinition.versions;
+		confirm(`  Check module ${moduleName}`, () => {
+			const moduleVersions = moduleDefinition.versions;
 
-		moduleVersions.forEach(function (moduleVersion) {
-			console.log(`\n  check version ${moduleVersion.version} - ${moduleVersion.description}`);
-			_.forEach(moduleVersion.check, (command, checkDescription) => {
-				try {
-					execSync(command);
-					console.log(`✓ check successful - ${checkDescription} (${moduleName})`);
-				} catch(e) {
-					console.log(`✗ check failed - ${checkDescription} (${moduleName})`);
-				}
+			moduleVersions.forEach(function (moduleVersion) {
+				console.log(`\n  check version ${moduleVersion.version} - ${moduleVersion.description}`);
+				_.forEach(moduleVersion.check, (command, checkDescription) => {
+					try {
+						execSync(command);
+						console.log(`✓ check successful - ${checkDescription} (${moduleName})`);
+					} catch(e) {
+						console.log(`✗ check failed - ${checkDescription} (${moduleName})`);
+					}
+				});
 			});
 		});
 

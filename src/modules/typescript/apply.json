@@ -1,4 +1,5 @@
 {
+  "name": "typescript",
   "versions": [{
     "version": 1,
     "description": "initial config",
