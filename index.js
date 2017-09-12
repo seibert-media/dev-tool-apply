@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
-var devToolsApply = require('./src/dev-tools-apply');
+const devToolsApply = require('./src/dev-tools-apply');
 
-devToolsApply.run();
+var moduleName = process.argv[2];
+
+devToolsApply.run(moduleName);
+

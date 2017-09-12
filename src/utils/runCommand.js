@@ -7,6 +7,9 @@ const stdioTypes = {
 
 module.exports = function runCommand(command, stdioType = "default") {
 	try {
+		if (stdioType === "log") {
+			console.log(`  execute command: ${command}`);
+		}
 		execSync(command, {
 			encoding: 'utf-8',
 			stdio: stdioTypes[stdioType]
