@@ -1,7 +1,6 @@
 const readlineSync = require('readline-sync');
 
-function confirm(question, action) {
-
+function confirm(question) {
 	const inputHint = "[y/n]";
 	const allowedValues = "yYnN".split("");
 	const confirmingValues = "yY".split("");
@@ -11,15 +10,13 @@ function confirm(question, action) {
 	function askForConfirmation() {
 		const answer = readlineSync.question(questionText);
 		if (allowedValues.indexOf(answer) < 0) {
-			askForConfirmation();
-		} else {
-			if (confirmingValues.indexOf(answer) >= 0) {
-				action()
-			}
+			return askForConfirmation();
 		}
+
+		return confirmingValues.indexOf(answer) >= 0;
 	}
 
-	askForConfirmation();
+	return askForConfirmation();
 }
 
 module.exports = confirm;

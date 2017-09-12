@@ -23,7 +23,7 @@ module.exports = {
 	run: function (moduleName) {
 		console.log("dev-tool-apply\n");
 
-		this.checkAndApply(moduleName);
+		this.checkAndApply(moduleName, true);
 	},
 	module: function (moduleName) {
 		const moduleDefinition = modules[moduleName];
@@ -39,7 +39,7 @@ module.exports = {
 
 		return new ApplyModule(moduleDefinition);
 	},
-	check: function (moduleName) {
+	check: function (moduleName, skipConfirm) {
 		if (!moduleName) {
 			moduleNames.forEach(this.check.bind(this));
 			return;
@@ -53,11 +53,11 @@ module.exports = {
 
 		console.log(`\n  .:: ${moduleName} ::.`);
 
-		confirm(`  Check module ${moduleName}`, () => {
+		if (skipConfirm || confirm(`  Check module ${moduleName}`)) {
 			module.check();
-		});
+		}
 	},
-	checkAndApply: function (moduleName) {
+	checkAndApply: function (moduleName, skipConfirm) {
 		if (!moduleName) {
 			moduleNames.forEach(this.checkAndApply.bind(this));
 			return;
@@ -71,14 +71,14 @@ module.exports = {
 
 		console.log(`\n  .:: ${moduleName} ::.`);
 
-		confirm(`  Check module ${moduleName}`, () => {
+		if (skipConfirm || confirm(`  Check module ${moduleName}`)) {
 			module.checkAndApply((applyStepWithFailedChecks) => {
-				confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`, () => {
+				if (confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`)) {
 					applyStepWithFailedChecks.applyCommands();
 					console.log(`\n  rerun checks for step - ${applyStepWithFailedChecks.description}`);
 					applyStepWithFailedChecks.check();
-				});
+				}
 			});
-		});
+		}
 	}
 };
