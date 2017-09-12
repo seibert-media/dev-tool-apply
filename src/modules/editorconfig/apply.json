@@ -1,0 +1,30 @@
+{
+  "name": "editorconfig",
+  "applySteps": [{
+    "description": "install npm package",
+    "commands": [
+      "npm install --save eclint"
+    ],
+    "checks": {
+      "is installed": "npm ls eclint"
+    }
+  },{
+    "description": "initial config",
+    "commands": [
+      "cp $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig ./",
+      "git add .editorconfig"
+    ],
+    "checks": {
+      "has config": "ls .editorconfig"
+    }
+  },{
+    "description": "config diff",
+    "commands": [
+      "cp $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig ./",
+      "git add -p .editorconfig"
+    ],
+    "checks": {
+      "has no config diff": "git diff --no-index -- .editorconfig $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig"
+    }
+  }]
+}
