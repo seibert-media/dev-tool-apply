@@ -2,7 +2,9 @@
 
 const devToolsApply = require('./src/dev-tools-apply');
 
-var moduleName = process.argv[2];
+const moduleName = process.argv[2];
+
+process.env['DEV_TOOL_APPLY_PATH'] = __dirname;
 
 devToolsApply.run(moduleName);
 
