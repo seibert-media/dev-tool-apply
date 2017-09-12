@@ -1,8 +1,10 @@
 const fs = require("fs");
 const _ = require("lodash");
 
+const apply = require("./utils/apply");
 const confirm = require("./utils/confirm");
-const runCommand = require("./utils/runCommand");
+
+const ApplyModule = apply.ApplyModule;
 
 const modulesPath = __dirname + "/modules/";
 
@@ -26,21 +28,12 @@ module.exports = {
 			return;
 		}
 
+		const module = new ApplyModule(moduleDefinition);
+
 		console.log(`\n  .:: ${moduleName} ::.`);
 
 		confirm(`  Check module ${moduleName}`, () => {
-			moduleDefinition.applySteps.forEach((moduleVersion) => {
-				console.log(`\n  check step - ${moduleVersion.description}`);
-				_.forEach(moduleVersion.check, (command, checkDescription) => {
-					const result = runCommand(command);
-
-					if (result.status === 0) {
-						console.log(`✓ check successful - ${checkDescription} (${moduleName})`);
-					} else {
-						console.log(`✗ check failed - ${checkDescription} (${moduleName})`);
-					}
-				});
-			});
+			module.check();
 		});
 
 	},
@@ -48,10 +41,8 @@ module.exports = {
 		const modules = {};
 
 		fs.readdirSync(modulesPath).forEach((moduleName) => {
-			const applyJson = require(modulesPath + moduleName + "/apply.json");
-			modules[moduleName] = applyJson;
+			modules[moduleName] = require(modulesPath + moduleName + "/apply.json");
 		});
-
 
 		return modules;
 	}

@@ -3,9 +3,9 @@
   "applySteps": [{
     "description": "install npm package",
     "commands": [
-
+      "npm install --save typescript"
     ],
-    "check": {
+    "checks": {
       "installed": "npm ls typescript"
     }
   },{
@@ -13,7 +13,7 @@
     "commands": [
       ""
     ],
-    "check": {
+    "checks": {
       "config": "ls tsconfig.json"
     }
   }]

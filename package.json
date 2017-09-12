@@ -12,6 +12,7 @@
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "preconditions": "^2.2.0"
   }
 }
