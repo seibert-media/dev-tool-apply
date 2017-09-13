@@ -6,7 +6,8 @@ const strategyClassByType = {
 	"command": require("./command-strategies/DefaultCommandStrategy"),
 	"npm-install": require("./command-strategies/NpmInstallStrategy"),
 	"npm-script": require("./command-strategies/NpmScriptStrategy"),
-	"copy-from-modules": require("./command-strategies/CopyFromModuleStrategy")
+	"initial-copy-from-modules": require("./command-strategies/InitialCopyFromModuleStrategy"),
+	"diff-copy-from-modules": require("./command-strategies/DiffCopyFromModuleStrategy")
 };
 
 class ApplyStep {

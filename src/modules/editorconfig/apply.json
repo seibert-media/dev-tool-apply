@@ -6,17 +6,12 @@
     "npm-module": "eclint"
   },{
     "description": "initial config",
-    "type": "copy-from-modules",
-    "srcPath": ".editorconfig",
-    "destPath": ".editorConfig"
+    "type": "initial-copy-from-modules",
+    "srcPath": ".editorconfig"
   },{
     "description": "config diff",
-    "type": "command",
-    "check": "git diff --no-index -- .editorconfig $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig",
-    "commands": [
-      "cp $DEV_TOOL_APPLY_MODULES/editorconfig/.editorconfig ./",
-      "git add -p .editorconfig"
-    ]
+    "type": "diff-copy-from-modules",
+    "srcPath": ".editorconfig"
   },{
     "description": "npm script 'eclint' exists",
     "type": "npm-script",
