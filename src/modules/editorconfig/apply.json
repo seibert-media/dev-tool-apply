@@ -6,7 +6,7 @@
       "npm install --save eclint"
     ],
     "checks": {
-      "is installed": "npm ls eclint"
+      "npm module is installed": "npm ls eclint"
     }
   },{
     "description": "initial config",
@@ -15,7 +15,7 @@
       "git add .editorconfig"
     ],
     "checks": {
-      "has config": "ls .editorconfig"
+      ".editorconfig exists": "ls .editorconfig"
     }
   },{
     "description": "config diff",
@@ -24,7 +24,23 @@
       "git add -p .editorconfig"
     ],
     "checks": {
-      "has no config diff": "git diff --no-index -- .editorconfig $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig"
+      "compare .editorconfig": "git diff --no-index -- .editorconfig $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig"
+    }
+  },{
+    "description": "npm script 'eclint' exists",
+    "commands": [
+      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts.eclint=\"eclint check .\"'"
+    ],
+    "checks": {
+      "run eclint script": "npm run eclint"
+    }
+  },{
+    "description": "npm script 'eclint-fix' exists",
+    "commands": [
+      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts[\"eclint-fix\"]=\"eclint fix .\"'"
+    ],
+    "checks": {
+      "run eclint-fix script": "npm run eclint-fix"
     }
   }]
 }
