@@ -48,9 +48,11 @@ module.exports = {
 			_.pull(argv, "--silent");
 		}
 
-		const moduleName = argv[0];
-		this.checkAndApply(moduleName, true);
-
+		if (argv.length > 0) {
+			this.checkAndApplyModules(argv, true);
+		} else {
+			this.checkAndApplyModules(moduleNames, false);
+		}
 	},
 	module: function (moduleName) {
 		const moduleDefinition = modules[moduleName];
@@ -66,12 +68,7 @@ module.exports = {
 
 		return new ApplyModule(moduleDefinition);
 	},
-	check: function (moduleName, skipConfirm) {
-		if (!moduleName) {
-			moduleNames.forEach(this.check.bind(this));
-			return;
-		}
-
+	checkModule: function (moduleName, skipConfirm) {
 		const module = this.module(moduleName);
 
 		if (!module) {
@@ -84,12 +81,7 @@ module.exports = {
 			module.check();
 		}
 	},
-	checkAndApply: function (moduleName, skipConfirm) {
-		if (!moduleName) {
-			moduleNames.forEach(this.checkAndApply.bind(this));
-			return;
-		}
-
+	checkAndApplyModule: function (moduleName, skipConfirm) {
 		const module = this.module(moduleName);
 
 		if (!module) {
@@ -112,5 +104,10 @@ module.exports = {
 				}
 			});
 		}
+	},
+	checkAndApplyModules: function (modules, skipConfirm) {
+		modules.forEach((module) => {
+			this.checkAndApplyModule(module, skipConfirm);
+		})
 	}
 };
