@@ -10,9 +10,17 @@ module.exports = class DefaultCommandStrategy {
         this.commands = applyStep.commands;
 
         this.changedFilesByCommand = applyStep.changedFiles || "";
+
+        this.expectedOutput = applyStep.expectedOutput;
     }
     check() {
-        return runCommand(this.checkCommmand).status === 0;
+        const commandResult = runCommand(this.checkCommmand);
+
+        if (this.expectedOutput !== undefined) {
+            return commandResult.output.trim() === this.expectedOutput.trim()
+        }
+
+        return commandResult.status === 0;
     }
     apply() {
         this.commands.forEach((command) => {
