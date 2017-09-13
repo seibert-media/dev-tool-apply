@@ -70,7 +70,7 @@ module.exports = {
 
         console.log(`\n  .:: ${moduleName} ::.`);
 
-        if (skipConfirm || confirm(`  Check module ${moduleName}`)) {
+        if (skipConfirm === true || confirm(`  Check module ${moduleName}`)) {
             module.check();
         }
     },
@@ -88,7 +88,7 @@ module.exports = {
 
         console.log(`\n  .:: ${moduleName} ::.`);
 
-        if (skipConfirm || confirm(`  Check module ${moduleName}`)) {
+        if (skipConfirm === true || confirm(`  Check module ${moduleName}`)) {
             module.checkAndApply((applyStepWithFailedChecks) => {
                 if (confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`)) {
                     applyStepWithFailedChecks.apply();
