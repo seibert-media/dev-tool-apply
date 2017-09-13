@@ -13,7 +13,7 @@ module.exports = class NpmScriptStrategy {
 		return runCommand(`npm run ${this.scriptName}`).status === 0;
 	}
 	apply() {
-		const command = `$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts.${this.scriptName}=\"${this.scriptCommand}\"'`;
+		const command = `$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts[\"${this.scriptName}\"]=\"${this.scriptCommand}\"'`;
 		return runCommand(command, 'log').status === 0;
 	}
 	changedFiles() {
