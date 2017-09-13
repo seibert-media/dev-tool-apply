@@ -1,47 +1,21 @@
 const _ = require("lodash");
-const preconditions = require("preconditions").errr();
 
-const runCommand = require("./runCommand");
-
-class DefaultCommandStrategy {
-	constructor(applyStep) {
-		preconditions.shouldBeObject(applyStep).test();
-
-		preconditions.shouldBeDefined(applyStep.check).test();
-		this.checkCommmand = applyStep.check;
-
-		preconditions.shouldBeArray(applyStep.commands).test();
-		this.commands = applyStep.commands;
-	}
-	check() {
-		const result = runCommand(this.checkCommmand);
-		return result.status === 0;
-	}
-
-	apply() {
-		this.commands.forEach((command) => {
-			runCommand(command, 'log');
-		});
-	}
-}
 
 const strategyClassByType = {
-	command: DefaultCommandStrategy
+	"command": require("./command-strategies/DefaultCommandStrategy"),
+	"npm-install": require("./command-strategies/NpmInstallStrategy")
 };
 
 class ApplyStep {
 	constructor(applyStep, module) {
+		this.module = module;
+
 		preconditions.shouldBeString(applyStep.description).test();
 		this.description = applyStep.description;
 
-		preconditions.shouldBeString(applyStep.type).test();
-		this.type = applyStep.type;
-		const StrategyForType = strategyClassByType[this.type];
+		const StrategyForType = strategyClassByType[applyStep.type];
 		preconditions.shouldBeDefined(StrategyForType).test();
-
 		this.commandStrategy = new StrategyForType(applyStep);
-
-		this.module = module;
 	}
 
 	check() {
@@ -71,7 +45,6 @@ class ApplyModule {
 		this.applySteps = moduleDefinition.applySteps.map((applyStep) => {
 			return new ApplyStep(applyStep, this);
 		});
-
 	}
 
 	check() {

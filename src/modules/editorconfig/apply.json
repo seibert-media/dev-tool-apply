@@ -2,11 +2,8 @@
   "name": "editorconfig",
   "applySteps": [{
     "description": "install npm package",
-    "type": "command",
-    "check": "npm ls eclint",
-    "commands": [
-      "npm install --save eclint"
-    ]
+    "type": "npm-install",
+    "npm-module": "eclint"
   },{
     "description": "initial config",
     "type": "command",
