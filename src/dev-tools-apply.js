@@ -23,7 +23,12 @@ module.exports = {
     run: function (moduleName) {
         console.log("dev-tool-apply\n");
 
-        this.checkAndApply(moduleName, true);
+        if (process.argv.indexOf("--version") >= 0) {
+            console.log(require("../package.json").version);
+        }
+        else {
+            this.checkAndApply(moduleName, true);
+        }
     },
     module: function (moduleName) {
         const moduleDefinition = modules[moduleName];
