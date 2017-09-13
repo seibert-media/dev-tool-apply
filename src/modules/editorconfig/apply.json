@@ -22,11 +22,9 @@
     ]
   },{
     "description": "npm script 'eclint' exists",
-    "type": "command",
-    "check": "npm run eclint",
-    "commands": [
-      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts.eclint=\"eclint check .\"'"
-    ]
+    "type": "npm-script",
+    "script-name": "eclint",
+    "script-command": "eclint check ."
   },{
     "description": "npm script 'eclint-fix' exists",
     "type": "command",

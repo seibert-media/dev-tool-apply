@@ -1,7 +1,7 @@
 const preconditions = require("preconditions").errr();
 const runCommand = require("../runCommand");
 
-class NpmInstallStrategy {
+module.exports = class NpmInstallStrategy {
 	constructor(applyStep) {
 		preconditions.shouldBeDefined(applyStep["npm-module"]).test();
 		this.npmModule = applyStep["npm-module"];
@@ -12,4 +12,4 @@ class NpmInstallStrategy {
 	apply() {
 		return runCommand(`npm install --save ${this.npmModule}`, 'log').status === 0;
 	}
-}
+};

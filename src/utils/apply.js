@@ -1,9 +1,10 @@
 const _ = require("lodash");
-
+const preconditions = require("preconditions").errr();
 
 const strategyClassByType = {
 	"command": require("./command-strategies/DefaultCommandStrategy"),
-	"npm-install": require("./command-strategies/NpmInstallStrategy")
+	"npm-install": require("./command-strategies/NpmInstallStrategy"),
+	"npm-script": require("./command-strategies/NpmScriptStrategy")
 };
 
 class ApplyStep {
