@@ -3,6 +3,9 @@
 const readlineSync = require('readline-sync');
 
 function confirm(question) {
+	if (confirm.silent === true) {
+		return true;
+	}
 	const inputHint = "[y/n]";
 	const allowedValues = "yYnN".split("");
 	const confirmingValues = "yY".split("");
@@ -20,5 +23,7 @@ function confirm(question) {
 
 	return askForConfirmation();
 }
+
+confirm.silent = false;
 
 module.exports = confirm;

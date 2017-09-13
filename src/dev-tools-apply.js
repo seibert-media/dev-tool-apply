@@ -1,5 +1,6 @@
 "use strict";
 
+const _ = require("lodash");
 const fs = require("fs");
 
 const apply = require("./utils/apply");
@@ -27,8 +28,10 @@ ${moduleNameList}
 `;
 
 module.exports = {
-	run: function (moduleName) {
+	run: function () {
 		console.log("dev-tool-apply\n");
+
+		const argv = process.argv.slice(2);
 
 		if (process.argv.indexOf("--version") >= 0) {
 			console.log(require("../package.json").version);
@@ -40,6 +43,12 @@ module.exports = {
 			return;
 		}
 
+		if (process.argv.indexOf("--silent") >= 0) {
+			confirm.silent = true;
+			_.pull(argv, "--silent");
+		}
+
+		const moduleName = argv[0];
 		this.checkAndApply(moduleName, true);
 
 	},
