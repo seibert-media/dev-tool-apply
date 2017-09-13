@@ -9,16 +9,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eclint": "eclint check .",
-    "eclint-fix": "eclint fix ."
+    "eclint-fix": "eclint fix .",
+    "eslint": "commons-modular-lint",
+    "eslint-fix": "commons-modular-lint --fix"
   },
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "eclint": "^2.4.3",
+    "eslint-commons": "^1.0.0",
     "json": "^9.0.6",
     "lodash": "^4.17.4",
     "preconditions": "^2.2.0",
     "readline-sync": "^1.4.7",
     "typescript": "^2.5.2"
+  },
+  "eslint": {
+    "src": "./",
+    "ignore": ".eslintignore",
+    "config": ".eslintrc.js"
   }
 }
