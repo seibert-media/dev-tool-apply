@@ -16,3 +16,18 @@ Node based commandline tool to apply and configure other tools to a project.
 
 * editorconfig
 * typescript
+
+
+## Suggested Modules
+
+* tslint
+* typescript-testing
+* webpack
+* eslint
+* confluence-protractor-base
+* karma
+* parent-pom-check
+* sonar-lint
+* checkstyle
+* findbugs
+* pmd?
