@@ -9,4 +9,3 @@ process.env['DEV_TOOL_APPLY_BIN'] = __dirname + "/node_modules/.bin/";
 process.env['DEV_TOOL_APPLY_MODULES'] = __dirname + "/src/modules/";
 
 devToolsApply.run(moduleName);
-

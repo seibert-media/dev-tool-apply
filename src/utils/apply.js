@@ -3,38 +3,62 @@ const preconditions = require("preconditions").errr();
 
 const runCommand = require("./runCommand");
 
+class DefaultCommandStrategy {
+	constructor(applyStep) {
+		preconditions.shouldBeObject(applyStep).test();
+
+		preconditions.shouldBeDefined(applyStep.check).test();
+		this.checkCommmand = applyStep.check;
+
+		preconditions.shouldBeArray(applyStep.commands).test();
+		this.commands = applyStep.commands;
+	}
+	check() {
+		const result = runCommand(this.checkCommmand);
+		return result.status === 0;
+	}
+
+	apply() {
+		this.commands.forEach((command) => {
+			runCommand(command, 'log');
+		});
+	}
+}
+
+const strategyClassByType = {
+	command: DefaultCommandStrategy
+};
+
 class ApplyStep {
 	constructor(applyStep, module) {
 		preconditions.shouldBeString(applyStep.description).test();
-		preconditions.shouldBeArray(applyStep.commands).test();
-		preconditions.shouldBeDefined(applyStep.check).test();
-
 		this.description = applyStep.description;
-		this.commands = applyStep.commands;
-		this.checkCommand = applyStep.check;
+
+		preconditions.shouldBeString(applyStep.type).test();
+		this.type = applyStep.type;
+		const StrategyForType = strategyClassByType[this.type];
+		preconditions.shouldBeDefined(StrategyForType).test();
+
+		this.commandStrategy = new StrategyForType(applyStep);
+
 		this.module = module;
 	}
 
 	check() {
-		let failingChecks = 0;
-
-		const result = runCommand(this.checkCommand);
 		const infoString = `${this.description} (${this.module.name})`;
+		const checkResult = this.commandStrategy.check();
 
-		if (result.status === 0) {
+		if (checkResult) {
 			console.log(`✓ check successful - ${infoString}`);
 		} else {
 			console.log(`✗ check failed - ${infoString}`);
-			failingChecks++;
 		}
 
-		return failingChecks;
+		return checkResult;
 	}
 
-	applyCommands() {
-		this.commands.forEach((command) => {
-			runCommand(command, 'log');
-		});
+	apply() {
+		this.commandStrategy.apply();
 	}
 }
 
@@ -58,9 +82,9 @@ class ApplyModule {
 
 	checkAndApply(failingCallback) {
 		this.applySteps.forEach((applyStep) => {
-			const failingChecks = applyStep.check();
+			const success = applyStep.check();
 
-			if (failingChecks) {
+			if (!success) {
 				failingCallback(applyStep);
 			}
 		});

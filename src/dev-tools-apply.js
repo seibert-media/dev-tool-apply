@@ -74,7 +74,7 @@ module.exports = {
 		if (skipConfirm || confirm(`  Check module ${moduleName}`)) {
 			module.checkAndApply((applyStepWithFailedChecks) => {
 				if (confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`)) {
-					applyStepWithFailedChecks.applyCommands();
+					applyStepWithFailedChecks.apply();
 					console.log(`\n  rerun checks for step - ${applyStepWithFailedChecks.description}`);
 					applyStepWithFailedChecks.check();
 				}
