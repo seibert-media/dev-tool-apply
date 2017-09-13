@@ -5,30 +5,28 @@ const runCommand = require("./runCommand");
 
 class ApplyStep {
 	constructor(applyStep, module) {
-		preconditions.shouldBeString(applyStep.description);
-		preconditions.shouldBeArray(applyStep.commands);
-		preconditions.shouldBeObject(applyStep.checks);
+		preconditions.shouldBeString(applyStep.description).test();
+		preconditions.shouldBeArray(applyStep.commands).test();
+		preconditions.shouldBeDefined(applyStep.check).test();
 
 		this.description = applyStep.description;
 		this.commands = applyStep.commands;
-		this.checks = applyStep.checks;
+		this.checkCommand = applyStep.check;
 		this.module = module;
 	}
 
 	check() {
 		let failingChecks = 0;
 
-		_.forEach(this.checks, (checkComand, checkDescription) => {
-			const result = runCommand(checkComand);
-			const infoString = `${checkDescription} (${this.module.name})`;
+		const result = runCommand(this.checkCommand);
+		const infoString = `${this.description} (${this.module.name})`;
 
-			if (result.status === 0) {
-				console.log(`✓ check successful - ${infoString}`);
-			} else {
-				console.log(`✗ check failed - ${infoString}`);
-				failingChecks++;
-			}
-		});
+		if (result.status === 0) {
+			console.log(`✓ check successful - ${infoString}`);
+		} else {
+			console.log(`✗ check failed - ${infoString}`);
+			failingChecks++;
+		}
 
 		return failingChecks;
 	}
@@ -42,10 +40,10 @@ class ApplyStep {
 
 class ApplyModule {
 	constructor(moduleDefinition) {
-		preconditions.shouldBeString(moduleDefinition.name);
+		preconditions.shouldBeString(moduleDefinition.name).test();
 		this.name = moduleDefinition.name;
 
-		preconditions.shouldBeArray(moduleDefinition.applySteps);
+		preconditions.shouldBeArray(moduleDefinition.applySteps).test();
 		this.applySteps = moduleDefinition.applySteps.map((applyStep) => {
 			return new ApplyStep(applyStep, this);
 		});

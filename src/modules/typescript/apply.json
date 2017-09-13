@@ -2,20 +2,18 @@
   "name": "typescript",
   "applySteps": [{
     "description": "install npm package",
+    "type": "command",
+    "check": "npm ls typescript",
     "commands": [
       "npm install --save typescript"
-    ],
-    "checks": {
-      "installed": "npm ls typescript"
-    }
+    ]
   },{
     "description": "initial config",
+    "type": "command",
+    "check": "ls tsconfig.json",
     "commands": [
       "node_modules/.bin/tsc --init",
       "git add tsconfig.json"
-    ],
-    "checks": {
-      "config": "ls tsconfig.json"
-    }
+    ]
   }]
 }
