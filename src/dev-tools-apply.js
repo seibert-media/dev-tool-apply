@@ -18,6 +18,12 @@ const modules = (function loadModules() {
 }());
 
 const moduleNames = Object.keys(modules);
+const moduleNameList = `• ${moduleNames.join("\n• ")}`;
+
+const usage = `Usage: ${process.argv[1]} [moduleName]
+
+${moduleNameList}
+`;
 
 module.exports = {
     run: function (moduleName) {
@@ -25,15 +31,21 @@ module.exports = {
 
         if (process.argv.indexOf("--version") >= 0) {
             console.log(require("../package.json").version);
+            return;
         }
-        else {
-            this.checkAndApply(moduleName, true);
+
+        if (process.argv.indexOf("--help") >= 0) {
+            console.log(usage);
+            return;
         }
+
+        this.checkAndApply(moduleName, true);
+
     },
     module: function (moduleName) {
         const moduleDefinition = modules[moduleName];
         if (!moduleDefinition) {
-            console.error(`Given module name '${moduleName}' does not exists. Choose on of the following modules:\n\n• ${moduleNames.join("\n• ")}\n`);
+            console.error(`Given module name '${moduleName}' does not exists. Choose on of the following modules:\n\n${moduleNameList}\n`);
             return;
         }
 
