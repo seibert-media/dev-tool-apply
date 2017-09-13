@@ -10,16 +10,18 @@ module.exports = function runCommand(command, stdioType = "default") {
         if (stdioType === "log") {
             console.log(`  execute command: ${command}`);
         }
-        execSync(command, {
+        const output = execSync(command, {
             encoding: 'utf-8',
             stdio: stdioTypes[stdioType]
         });
         return {
-            status: 0
+            status: 0,
+            output: output
         };
     } catch (e) {
         return {
-            status: e.status
+            status: e.status,
+            output: e.message
         };
     }
 };

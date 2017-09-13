@@ -10,7 +10,9 @@ module.exports = class NpmScriptStrategy {
         this.scriptCommand = applyStep["script-command"];
     }
     check() {
-        return runCommand(`npm run ${this.scriptName}`).status === 0;
+        const command = `$DEV_TOOL_APPLY_BIN/json -f package.json scripts.${this.scriptName}`;
+        const result = runCommand(command);
+        return result.output.trim() === this.scriptCommand.trim();
     }
     apply() {
         const command = `$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts[\"${this.scriptName}\"]=\"${this.scriptCommand}\"'`;
