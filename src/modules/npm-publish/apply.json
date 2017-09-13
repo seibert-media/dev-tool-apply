@@ -1,0 +1,9 @@
+{
+  "name": "npm-publish",
+  "applySteps": [{
+    "description": "publish.sh up-to-date",
+    "type": "diff-copy-from-modules",
+    "srcPath": "publish.sh",
+    "destPath": "scripts/publish.sh"
+  }]
+}
