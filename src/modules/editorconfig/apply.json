@@ -5,11 +5,7 @@
     "type": "npm-install",
     "npm-module": "eclint"
   },{
-    "description": "initial config",
-    "type": "initial-copy-from-modules",
-    "srcPath": ".editorconfig"
-  },{
-    "description": "config diff",
+    "description": "config up-to-date",
     "type": "diff-copy-from-modules",
     "srcPath": ".editorconfig"
   },{
