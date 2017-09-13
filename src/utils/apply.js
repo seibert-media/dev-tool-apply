@@ -1,10 +1,12 @@
 const _ = require("lodash");
 const preconditions = require("preconditions").errr();
+const runCommand = require("./runCommand");
 
 const strategyClassByType = {
 	"command": require("./command-strategies/DefaultCommandStrategy"),
 	"npm-install": require("./command-strategies/NpmInstallStrategy"),
-	"npm-script": require("./command-strategies/NpmScriptStrategy")
+	"npm-script": require("./command-strategies/NpmScriptStrategy"),
+	"copy-from-modules": require("./command-strategies/CopyFromModuleStrategy")
 };
 
 class ApplyStep {
@@ -15,8 +17,8 @@ class ApplyStep {
 		this.description = applyStep.description;
 
 		const StrategyForType = strategyClassByType[applyStep.type];
-		preconditions.shouldBeDefined(StrategyForType).test();
-		this.commandStrategy = new StrategyForType(applyStep);
+		preconditions.shouldBeDefined(StrategyForType, `No strategy found for type '${applyStep.type}'`).test();
+		this.commandStrategy = new StrategyForType(applyStep, this.module.name);
 	}
 
 	check() {
@@ -34,6 +36,18 @@ class ApplyStep {
 
 	apply() {
 		this.commandStrategy.apply();
+	}
+
+	save() {
+		const changedFiles = this.commandStrategy.changedFiles();
+		if (!changedFiles) {
+			return;
+		}
+		if (this.commandStrategy.isUntrackedFile) {
+			runCommand(`git add ${changedFiles}`, "log");
+		} else {
+			runCommand(`git add -p ${changedFiles}`, "log");
+		}
 	}
 }
 

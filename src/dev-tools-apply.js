@@ -75,6 +75,11 @@ module.exports = {
 			module.checkAndApply((applyStepWithFailedChecks) => {
 				if (confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`)) {
 					applyStepWithFailedChecks.apply();
+
+					if (confirm(`\n  Add changes to git now?`)) {
+						applyStepWithFailedChecks.save();
+					}
+
 					console.log(`\n  rerun checks for step - ${applyStepWithFailedChecks.description}`);
 					applyStepWithFailedChecks.check();
 				}

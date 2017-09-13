@@ -12,4 +12,7 @@ module.exports = class NpmInstallStrategy {
 	apply() {
 		return runCommand(`npm install --save ${this.npmModule}`, 'log').status === 0;
 	}
+	changedFiles() {
+		return "package.json";
+	}
 };

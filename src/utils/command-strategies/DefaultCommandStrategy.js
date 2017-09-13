@@ -8,6 +8,8 @@ module.exports = class DefaultCommandStrategy {
 
 		preconditions.shouldBeArray(applyStep.commands).test();
 		this.commands = applyStep.commands;
+
+		this.changedFilesByCommand = applyStep.changedFiles || "";
 	}
 	check() {
 		return runCommand(this.checkCommmand).status === 0;
@@ -16,5 +18,8 @@ module.exports = class DefaultCommandStrategy {
 		this.commands.forEach((command) => {
 			runCommand(command, 'log');
 		});
+	}
+	changedFiles() {
+		return this.changedFilesByCommand;
 	}
 };

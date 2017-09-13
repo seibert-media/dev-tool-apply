@@ -6,12 +6,9 @@
     "npm-module": "eclint"
   },{
     "description": "initial config",
-    "type": "command",
-    "check": "ls .editorconfig",
-    "commands": [
-      "cp $DEV_TOOL_APPLY_MODULES/editorconfig/.editorconfig ./",
-      "git add .editorconfig"
-    ]
+    "type": "copy-from-modules",
+    "srcPath": ".editorconfig",
+    "destPath": ".editorConfig"
   },{
     "description": "config diff",
     "type": "command",
@@ -27,10 +24,8 @@
     "script-command": "eclint check ."
   },{
     "description": "npm script 'eclint-fix' exists",
-    "type": "command",
-    "check": "npm run eclint-fix",
-    "commands": [
-      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts[\"eclint-fix\"]=\"eclint fix .\"'"
-    ]
+    "type": "npm-script",
+    "script-name": "eclint-fix",
+    "script-command": "eclint fix ."
   }]
 }

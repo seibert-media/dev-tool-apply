@@ -4,6 +4,7 @@
     "description": "install npm package",
     "type": "command",
     "check": "npm ls typescript",
+    "changedFiles": "package.json",
     "commands": [
       "npm install --save typescript"
     ]
@@ -11,6 +12,7 @@
     "description": "initial config",
     "type": "command",
     "check": "ls tsconfig.json",
+    "changedFiles": "tsconfig.json",
     "commands": [
       "node_modules/.bin/tsc --init",
       "git add tsconfig.json"
