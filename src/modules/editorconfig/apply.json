@@ -11,7 +11,7 @@
   },{
     "description": "initial config",
     "commands": [
-      "cp $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig ./",
+      "cp $DEV_TOOL_APPLY_MODULES/editorconfig/.editorconfig ./",
       "git add .editorconfig"
     ],
     "checks": {
@@ -20,7 +20,7 @@
   },{
     "description": "config diff",
     "commands": [
-      "cp $DEV_TOOL_APPLY_PATH/src/modules/editorconfig/.editorconfig ./",
+      "cp $DEV_TOOL_APPLY_MODULES/editorconfig/.editorconfig ./",
       "git add -p .editorconfig"
     ],
     "checks": {
