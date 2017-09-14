@@ -3,7 +3,7 @@
   "applySteps": [{
     "description": "install npm package",
     "type": "npm-install",
-    "npm-module": "eclint"
+    "npm-module": "eclint@2.3.0"
   },{
     "description": "config up-to-date",
     "type": "diff-copy-from-modules",
@@ -12,11 +12,11 @@
     "description": "npm script 'eclint' exists",
     "type": "npm-script",
     "script-name": "eclint",
-    "script-command": "eclint check ."
+    "script-command": "eclint check"
   },{
     "description": "npm script 'eclint-fix' exists",
     "type": "npm-script",
     "script-name": "eclint-fix",
-    "script-command": "eclint fix ."
+    "script-command": "eclint fix"
   }]
 }
