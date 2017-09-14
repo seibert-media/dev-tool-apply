@@ -96,7 +96,7 @@ module.exports = {
 					applyStepWithFailedChecks.apply();
 
 					if (confirm(`\n  Add changes to git now?`)) {
-						applyStepWithFailedChecks.save();
+						applyStepWithFailedChecks.save(confirm.silent);
 					}
 
 					console.log(`\n  rerun checks for step - ${applyStepWithFailedChecks.description}`);

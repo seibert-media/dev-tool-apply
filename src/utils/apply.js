@@ -40,12 +40,12 @@ class ApplyStep {
 		this.commandStrategy.apply();
 	}
 
-	save() {
+	save(silent) {
 		const changedFiles = this.commandStrategy.changedFiles();
 		if (!changedFiles) {
 			return;
 		}
-		if (this.commandStrategy.isUntrackedFile) {
+		if (silent || this.commandStrategy.isUntrackedFile) {
 			runCommand(`git add ${changedFiles}`, "log");
 		} else {
 			runCommand(`git add -p ${changedFiles}`, "log");
