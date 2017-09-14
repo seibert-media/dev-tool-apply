@@ -7,7 +7,7 @@
     "dta": "index.js"
   },
   "scripts": {
-    "test": "rm -f .editorconfig .eslintignore scripts/publish.sh && node index.js --silent editorconfig npm-publish eslint &&  git diff --exit-code --stat",
+    "test": "rm -rf .editorconfig .eslintignore scripts/ && node index.js --silent editorconfig npm-publish eslint &&  git diff --exit-code --stat",
     "eclint": "eclint check .",
     "eclint-fix": "eclint fix .",
     "eslint": "commons-modular-lint",
