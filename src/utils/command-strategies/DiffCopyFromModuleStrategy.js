@@ -1,5 +1,8 @@
 "use strict";
 
+const fileExists = require("fs").existsSync;
+const dirname = require("path").dirname;
+
 const preconditions = require("preconditions").errr();
 const runCommand = require("../runCommand");
 
@@ -20,6 +23,10 @@ module.exports = class DiffCopyFromModuleStrategy {
 		return runCommand(`git diff --no-index -- ${this.destPath} ${this.absoluteSrcPath}`).status === 0;
 	}
 	apply() {
+		const destDirectory = dirname(this.destPath);
+		if (!fileExists(destDirectory)) {
+			runCommand(`mkdir -p ${destDirectory}`);
+		}
 		const command = `cp ${this.absoluteSrcPath} ${this.destPath}`;
 		return runCommand(command, 'log').status === 0;
 	}
