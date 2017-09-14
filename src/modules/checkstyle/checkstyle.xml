@@ -39,6 +39,8 @@
         <property name="basedir" value="${basedir}"/>
     -->
 
+    <module name="SuppressWarningsFilter" />
+
     <property name="fileExtensions" value="java, properties, xml"/>
 
     <!-- Checks that a package-info.java file exists for each package.     -->
@@ -80,6 +82,8 @@
 
     <module name="TreeWalker">
 
+        <module name="SuppressWarningsHolder" />
+
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <!-- TODO: Discuss -->
@@ -117,6 +121,7 @@
         <module name="LineLength">
             <property name="max" value="160"/>
             <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+            <property name="severity" value="warning"/>
         </module>
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
@@ -170,7 +175,9 @@
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
-        <module name="VisibilityModifier"/>
+        <module name="VisibilityModifier">
+            <property name="protectedAllowed" value="true"/>
+        </module>
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
