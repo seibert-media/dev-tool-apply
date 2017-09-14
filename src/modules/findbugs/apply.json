@@ -12,6 +12,6 @@
     "description": "npm script 'findbugs' exists",
     "type": "npm-script",
     "script-name": "findbugs",
-    "script-command": "mvn findbugs:check"
+    "script-command": "atlas-mvn findbugs:check"
   }]
 }

@@ -8,6 +8,6 @@
     "description": "npm script 'checkstyle' exists",
     "type": "npm-script",
     "script-name": "checkstyle",
-    "script-command": "mvn checkstyle:check -Dcheckstyle.config.location=checkstyle.xml"
+    "script-command": "atlas-mvn checkstyle:check -Dcheckstyle.config.location=checkstyle.xml"
   }]
 }
