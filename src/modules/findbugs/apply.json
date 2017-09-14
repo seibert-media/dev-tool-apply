@@ -1,0 +1,17 @@
+{
+  "name": "findbugs",
+  "applySteps": [{
+    "description": "findbugs-exclude.xml up-to-date",
+    "type": "diff-copy-from-modules",
+    "srcPath": "findbugs-exclude.xml"
+  },{
+    "description": "findbugs-include.xml up-to-date",
+    "type": "diff-copy-from-modules",
+    "srcPath": "findbugs-include.xml"
+  },{
+    "description": "npm script 'findbugs' exists",
+    "type": "npm-script",
+    "script-name": "findbugs",
+    "script-command": "mvn findbugs:check"
+  }]
+}
