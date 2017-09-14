@@ -1,0 +1,13 @@
+{
+  "name": "checkstyle",
+  "applySteps": [{
+    "description": "checkstyle.xml up-to-date",
+    "type": "diff-copy-from-modules",
+    "srcPath": "checkstyle.xml"
+  },{
+    "description": "npm script 'checkstyle' exists",
+    "type": "npm-script",
+    "script-name": "checkstyle",
+    "script-command": "mvn checkstyle:check -Dcheckstyle.config.location=checkstyle.xml"
+  }]
+}
