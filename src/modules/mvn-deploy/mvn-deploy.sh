@@ -9,7 +9,7 @@ DIFF_STATUS=$?
 
 if [ $DIFF_STATUS != 0 ]; then
     echo
-    echo "Tagged version $VERSION_TAG must match the package.json without any diff to be published"
+    (>&2 echo "ERROR: Tagged version $VERSION_TAG must match the maven version without any diff to be published")
     exit $DIFF_STATUS
 fi
 
