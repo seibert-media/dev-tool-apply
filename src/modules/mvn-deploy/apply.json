@@ -1,0 +1,9 @@
+{
+  "name": "mvn-deploy",
+  "applySteps": [{
+    "description": "mvn-deploy.sh up-to-date",
+    "type": "diff-copy-from-modules",
+    "srcPath": "mvn-deploy.sh",
+    "destPath": "scripts/mvn-deploy.sh"
+  }]
+}
