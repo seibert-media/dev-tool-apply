@@ -22,39 +22,13 @@ const modules = (function loadModules() {
 const moduleNames = Object.keys(modules);
 const moduleNameList = `• ${moduleNames.join("\n• ")}`;
 
-const usage = `Usage: ${process.argv[1]} [moduleName]
+const usage = `Usage: ${process.argv[1]} apply [moduleName]
 
 ${moduleNameList}
 `;
 
-module.exports = {
-	run: function () {
-		console.log("dev-tool-apply\n");
-
-		const argv = process.argv.slice(2);
-
-		if (process.argv.indexOf("--version") >= 0) {
-			console.log(require("../package.json").version);
-			return;
-		}
-
-		if (process.argv.indexOf("--help") >= 0) {
-			console.log(usage);
-			return;
-		}
-
-		if (process.argv.indexOf("--silent") >= 0) {
-			confirm.silent = true;
-			_.pull(argv, "--silent");
-		}
-
-		if (argv.length > 0) {
-			this.checkAndApplyModules(argv, true);
-		} else {
-			this.checkAndApplyModules(moduleNames, false);
-		}
-	},
-	module: function (moduleName) {
+const devToolsApplyInternal = {
+		module: function (moduleName) {
 		const moduleDefinition = modules[moduleName];
 		if (!moduleDefinition) {
 			console.error(`Given module name '${moduleName}' does not exists. Choose on of the following modules:\n\n${moduleNameList}\n`);
@@ -109,5 +83,46 @@ module.exports = {
 		modules.forEach((module) => {
 			this.checkAndApplyModule(module, skipConfirm);
 		})
+	}
+};
+
+module.exports = {
+	help: function () {
+		console.log(usage);
+	},
+	run: function (command) {
+		console.log("dev-tool-apply\n");
+
+		const processArguments = process.argv;
+
+		if (processArguments.indexOf("--version") >= 0) {
+			console.log(require("../package.json").version);
+			return;
+		}
+
+		if (processArguments.indexOf("--help") >= 0) {
+			this.help();
+			return;
+		}
+
+		if (processArguments.indexOf("--silent") >= 0) {
+			confirm.silent = true;
+			_.pull(processArguments, "--silent");
+		}
+
+		const commandFn = this[command];
+		if (!commandFn) {
+			this.help();
+			return;
+		}
+		const commandArguments = process.argv.slice(3);
+		commandFn.apply(this, commandArguments);
+	},
+	apply: function (...parameterModuleNames) {
+		if (parameterModuleNames.length > 0) {
+			devToolsApplyInternal.checkAndApplyModules(parameterModuleNames, true);
+		} else {
+			devToolsApplyInternal.checkAndApplyModules(moduleNames, false);
+		}
 	}
 };

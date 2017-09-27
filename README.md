@@ -7,10 +7,10 @@ Node based commandline tool to apply and configure other tools to a project.
 	npm install [-g] dev-tool-apply
 	
 	# check all available modules
-	dta
+	dta apply
 	
 	# check editorconfig
-	dta editorconfig
+	dta apply editorconfig
 
 ## Available Modules
 

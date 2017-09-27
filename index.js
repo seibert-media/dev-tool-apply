@@ -7,4 +7,6 @@ process.env.DEV_TOOL_APPLY_PATH = __dirname;
 process.env.DEV_TOOL_APPLY_BIN = __dirname + "/node_modules/.bin/";
 process.env.DEV_TOOL_APPLY_MODULES = __dirname + "/src/modules/";
 
-devToolsApply.run();
+const command = process.argv[2];
+
+devToolsApply.run(command);
