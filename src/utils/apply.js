@@ -20,7 +20,7 @@ class ApplyStep {
 
 		const StrategyForType = strategyClassByType[applyStep.type];
 		preconditions.shouldBeDefined(StrategyForType, `No strategy found for type '${applyStep.type}'`).test();
-		this.commandStrategy = new StrategyForType(applyStep, this.module.name);
+		this.commandStrategy = new StrategyForType(applyStep, this.module);
 	}
 
 	check() {
@@ -58,6 +58,7 @@ class ApplyModule {
 	constructor(moduleDefinition) {
 		preconditions.shouldBeString(moduleDefinition.name).test();
 		this.name = moduleDefinition.name;
+		this.path = moduleDefinition.path;
 
 		preconditions.shouldBeArray(moduleDefinition.applySteps).test();
 		this.applySteps = moduleDefinition.applySteps.map((applyStep) => {

@@ -7,14 +7,17 @@ const preconditions = require("preconditions").errr();
 const runCommand = require("../runCommand");
 
 module.exports = class DiffCopyFromModuleStrategy {
-	constructor(applyStep, moduleName) {
-		this.moduleName = moduleName;
+	constructor(applyStep, module) {
+		preconditions.shouldBeDefined(module.name);
+		preconditions.shouldBeDefined(module.path);
+		this.moduleName = module.name;
+		this.modulePath = module.path;
 
 		preconditions.shouldBeDefined(applyStep.srcPath).test();
 		this.srcPath = applyStep.srcPath;
 		this.destPath = applyStep.destPath || this.srcPath;
 
-		this.absoluteSrcPath = `$DEV_TOOL_APPLY_MODULES/${this.moduleName}/${this.srcPath}`;
+		this.absoluteSrcPath = `${this.modulePath}${this.moduleName}/${this.srcPath}`;
 	}
 
 	check() {

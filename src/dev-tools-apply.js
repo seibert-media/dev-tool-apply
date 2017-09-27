@@ -1,25 +1,17 @@
 "use strict";
 
 const _ = require("lodash");
-const fs = require("fs");
 
 const apply = require("./utils/apply");
+const moduleRegistry = require("./utils/moduleRegistry").moduleRegistry;
 const confirm = require("./utils/confirm");
 
 const ApplyModule = apply.ApplyModule;
 
-const modules = (function loadModules() {
-	const modulesPath = __dirname + "/modules/";
-	const collectModules = {};
+moduleRegistry.loadInternalModules(__dirname + "/modules/");
+moduleRegistry.loadExternalModules(process.cwd() + "/.dtarc.json");
 
-	fs.readdirSync(modulesPath).forEach((moduleName) => {
-		collectModules[moduleName] = require(modulesPath + moduleName + "/apply.json");
-	});
-
-	return collectModules;
-}());
-
-const moduleNames = Object.keys(modules);
+const moduleNames = moduleRegistry.moduleNames();
 const moduleNameList = `• ${moduleNames.join("\n• ")}`;
 
 const usage = `Usage: ${process.argv[1]} apply [moduleName]
@@ -29,13 +21,14 @@ ${moduleNameList}
 
 const devToolsApplyInternal = {
 	module: function (moduleName) {
+		const modules = moduleRegistry.modules();
 		const moduleDefinition = modules[moduleName];
 		if (!moduleDefinition) {
 			console.error(`Given module name '${moduleName}' does not exists. Choose on of the following modules:\n\n${moduleNameList}\n`);
 			return;
 		}
 
-		if (moduleName !== moduleDefinition.name) {
+		if (moduleName !== moduleDefinition.fullModuleName) {
 			console.error(`Give module name (${moduleName}) and name attribute from apply.json (${moduleDefinition.name}) do not match.`);
 			return;
 		}
