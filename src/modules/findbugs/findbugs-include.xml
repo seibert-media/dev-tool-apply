@@ -1,6 +1,0 @@
-<!-- Documentation: http://findbugs.sourceforge.net/manual/filter.html -->
-<FindBugsFilter>
-     <Match>
-          <Package name="~net\.seibertmedia\.plugin.*"/>
-     </Match>
-</FindBugsFilter>
