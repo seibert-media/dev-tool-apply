@@ -15,8 +15,6 @@ module.exports = class DiffCopyFromModuleStrategy {
 		this.destPath = applyStep.destPath || this.srcPath;
 
 		this.absoluteSrcPath = `$DEV_TOOL_APPLY_MODULES/${this.moduleName}/${this.srcPath}`;
-
-		this.isUntrackedFile = runCommand(`git ls-files ${this.destPath}`).output.trim() === "";
 	}
 
 	check() {

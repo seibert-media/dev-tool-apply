@@ -45,7 +45,8 @@ class ApplyStep {
 		if (!changedFiles) {
 			return;
 		}
-		if (silent || this.commandStrategy.isUntrackedFile) {
+		const isUntrackedFile = runCommand(`git ls-files ${changedFiles}`).output.trim() === "";
+		if (silent || isUntrackedFile) {
 			runCommand(`git add ${changedFiles}`, "log");
 		} else {
 			runCommand(`git add -p ${changedFiles}`, "log");
