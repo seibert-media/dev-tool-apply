@@ -1,6 +1,6 @@
 {
   "name": "dev-tool-apply",
-  "version": "0.2.0-0",
+  "version": "0.2.0-1",
   "description": "Apply quality tools and address other cross-cutting concerns in your projects",
   "main": "src/dev-tools-apply.js",
   "bin": {
