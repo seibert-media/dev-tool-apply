@@ -1,0 +1,12 @@
+{
+  "name": "example-module-2",
+  "applySteps": [{
+    "description": "install eslint",
+    "type": "npm-install",
+    "npm-module": "eslint"
+  },{
+    "description": "copy some test file",
+    "type": "diff-copy-from-modules",
+    "srcPath": ".test-file"
+  }]
+}

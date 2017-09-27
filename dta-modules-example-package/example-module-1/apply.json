@@ -1,0 +1,18 @@
+{
+  "name": "example-module-1",
+  "applySteps": [{
+    "description": "add a useless echo npm script",
+    "type": "npm-script",
+    "script-name": "echo-hello-world",
+    "script-command": "echo 'hello-world'"
+  },{
+    "description": "add useless json node to package.json",
+    "type": "command",
+    "check": "$DEV_TOOL_APPLY_BIN/json -0 -f package.json xyz",
+    "expectedOutput": "{\"xyz\":43}",
+    "changedFiles": "package.json",
+    "commands": [
+      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.xyz={\"xyz\":42}'"
+    ]
+  }]
+}
