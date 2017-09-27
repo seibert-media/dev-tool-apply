@@ -18,7 +18,7 @@ module.exports = class NpmScriptStrategy {
 	}
 	apply() {
 		const command = `$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.scripts["${this.scriptName}"]="${this.scriptCommand}"'`;
-		return runCommand(command, 'log').status === 0;
+		return runCommand(command, "log").status === 0;
 	}
 	changedFiles() {
 		return "package.json";

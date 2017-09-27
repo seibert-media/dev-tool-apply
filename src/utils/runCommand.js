@@ -13,7 +13,7 @@ module.exports = function runCommand(command, stdioType = "default") {
 			console.log(`  execute command: ${command}`);
 		}
 		const output = execSync(command, {
-			encoding: 'utf-8',
+			encoding: "utf-8",
 			stdio: stdioTypes[stdioType]
 		});
 		return {

@@ -26,7 +26,7 @@ module.exports = class DiffCopyFromModuleStrategy {
 			runCommand(`mkdir -p ${destDirectory}`);
 		}
 		const command = `cp ${this.absoluteSrcPath} ${this.destPath}`;
-		return runCommand(command, 'log').status === 0;
+		return runCommand(command, "log").status === 0;
 	}
 	changedFiles() {
 		return this.destPath;

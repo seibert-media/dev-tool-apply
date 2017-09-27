@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-const devToolsApply = require('./src/dev-tools-apply');
+const devToolsApply = require("./src/dev-tools-apply");
 
 process.env.DEV_TOOL_APPLY_PATH = __dirname;
 process.env.DEV_TOOL_APPLY_BIN = __dirname + "/node_modules/.bin/";

@@ -28,7 +28,7 @@ ${moduleNameList}
 `;
 
 const devToolsApplyInternal = {
-		module: function (moduleName) {
+	module: function (moduleName) {
 		const moduleDefinition = modules[moduleName];
 		if (!moduleDefinition) {
 			console.error(`Given module name '${moduleName}' does not exists. Choose on of the following modules:\n\n${moduleNameList}\n`);
@@ -69,7 +69,7 @@ const devToolsApplyInternal = {
 				if (confirm(`\n  Checks for '${applyStepWithFailedChecks.description}' failed - Apply this step now?`)) {
 					applyStepWithFailedChecks.apply();
 
-					if (confirm(`\n  Add changes to git now?`)) {
+					if (confirm("\n  Add changes to git now?")) {
 						applyStepWithFailedChecks.save(confirm.silent);
 					}
 
@@ -82,7 +82,7 @@ const devToolsApplyInternal = {
 	checkAndApplyModules: function (modules, skipConfirm) {
 		modules.forEach((module) => {
 			this.checkAndApplyModule(module, skipConfirm);
-		})
+		});
 	}
 };
 

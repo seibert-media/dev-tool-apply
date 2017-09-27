@@ -1,6 +1,6 @@
 "use strict";
 
-const readlineSync = require('readline-sync');
+const readlineSync = require("readline-sync");
 
 function confirm(question) {
 	if (confirm.silent === true) {

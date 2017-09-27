@@ -26,7 +26,7 @@ module.exports = class DefaultCommandStrategy {
 	}
 	apply() {
 		this.commands.forEach((command) => {
-			runCommand(command, 'log');
+			runCommand(command, "log");
 		});
 	}
 	changedFiles() {

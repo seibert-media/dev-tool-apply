@@ -10,8 +10,8 @@
     "test": "rm -rf .editorconfig .eslintignore scripts/ && node index.js apply --silent editorconfig npm-publish eslint &&  git diff --exit-code --stat",
     "eclint": "eclint check",
     "eclint-fix": "eclint fix",
-    "eslint": "commons-modular-lint",
-    "eslint-fix": "commons-modular-lint --fix"
+    "eslint": "eslint .",
+    "eslint-fix": "eslint --fix ."
   },
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "eclint": "^2.3.0",
-    "eslint-commons": "^1.0.0"
+    "eslint": "^4.7.2"
   }
 }

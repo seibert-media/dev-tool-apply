@@ -1,16 +1,30 @@
 module.exports = {
     "env": {
         "node": true,
+        "commonjs": true,
         "es6": true
     },
-    "extends": "eslint-config-linchpin",
-    "globals": {
-        "SeibertMedia": false // TODO: check globals
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module"
     },
     "rules": {
-        "id-blacklist": ["off"], // TODO: custom blacklist,
-        "id-length": ["warn", { "min": 2, "max": 45,  "exceptions": ["$", "_"]} ],
-        "max-params": ["warn", 5], // TODO: check max-params
-        "complexity": ["warn", 7] // TODO: check complexity
+        "no-console": "off",
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
     }
 };
