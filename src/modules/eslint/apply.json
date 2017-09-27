@@ -3,33 +3,24 @@
   "applySteps": [{
     "description": "install npm package",
     "type": "npm-install",
-    "npm-module": "eslint-commons"
+    "npm-module": "eslint"
   },{
-    "description": "eslintrc up-to-date",
-    "type": "diff-copy-from-modules",
-    "srcPath": ".eslintrc.js"
-  },{
-    "description": "eslintignore exists",
-    "type": "initial-copy-from-modules",
-    "srcPath": ".eslintignore"
+    "description": "init eslint",
+    "type": "command",
+    "check": "ls .eslintrc*",
+    "changedFiles": ".eslintrc*",
+    "commands": [
+      "node_modules/.bin/eslint --init"
+    ]
   },{
     "description": "npm script 'eslint' exists",
     "type": "npm-script",
     "script-name": "eslint",
-    "script-command": "commons-modular-lint"
+    "script-command": "eslint ."
   },{
     "description": "npm script 'eslint-fix' exists",
     "type": "npm-script",
     "script-name": "eslint-fix",
-    "script-command": "commons-modular-lint --fix"
-  },{
-    "description": "add eslint config to package.json",
-    "type": "command",
-    "check": "$DEV_TOOL_APPLY_BIN/json -0 -f package.json eslint",
-    "expectedOutput": "{\"src\":\"./\",\"ignore\":\".eslintignore\",\"config\":\".eslintrc.js\"}",
-    "changedFiles": "package.json",
-    "commands": [
-      "$DEV_TOOL_APPLY_BIN/json -I -f package.json -e 'this.eslint={\"src\": \"./\",\"ignore\":\".eslintignore\",\"config\":\".eslintrc.js\"}'"
-    ]
+    "script-command": "eslint --fix ."
   }]
 }
