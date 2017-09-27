@@ -8,7 +8,6 @@ const confirm = require("./utils/confirm");
 
 const ApplyModule = apply.ApplyModule;
 
-moduleRegistry.loadInternalModules(__dirname + "/modules/");
 moduleRegistry.loadExternalModules(process.cwd() + "/.dtarc.json");
 
 const moduleNames = moduleRegistry.moduleNames();

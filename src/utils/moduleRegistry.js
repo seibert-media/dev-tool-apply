@@ -23,17 +23,13 @@ module.exports.moduleRegistry = {
 			const module = require(modulePath + moduleName + "/apply.json");
 			module.fullModuleName = fullModuleName;
 			module.path = modulePath;
+			preconditions.shouldBeUndefined(modules[fullModuleName]);
 			modules[fullModuleName] = module;
 			return module;
 		} catch (e) {
 			console.log(e);
 			console.error(`Error loading module '${fullModuleName}' from ${moduleApplyJson}`);
 		}
-	},
-	loadInternalModules: function (modulesPath) {
-		fs.readdirSync(modulesPath).forEach((moduleName) => {
-			this.loadModule(modulesPath, moduleName);
-		});
 	},
 	loadExternalModules: function (dtaRcConfigPath) {
 		if (!fs.existsSync(dtaRcConfigPath)) {

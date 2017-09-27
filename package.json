@@ -7,7 +7,7 @@
     "dta": "index.js"
   },
   "scripts": {
-    "test": "rm -rf .editorconfig .eslintignore scripts/ && node index.js apply --silent editorconfig npm-publish eslint &&  git diff --exit-code --stat",
+    "test": "rm -rf .editorconfig .eslintignore scripts/ && node index.js apply --silent qa/editorconfig ci/npm-publish qa/eslint &&  git diff --exit-code --stat",
     "eclint": "eclint check",
     "eclint-fix": "eclint fix",
     "eslint": "eslint .",
@@ -16,6 +16,8 @@
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dta-modules-ci": "./dta-modules-ci",
+    "dta-modules-qa": "./dta-modules-qa",
     "json": "^9.0.6",
     "lodash": "^4.17.4",
     "preconditions": "^2.2.0",

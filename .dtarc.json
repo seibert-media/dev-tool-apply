@@ -1,5 +1,7 @@
 {
   "modules": [
-    "dta-modules-example-package"
+    "dta-modules-example-package",
+    "dta-modules-ci",
+    "dta-modules-qa"
   ]
 }
