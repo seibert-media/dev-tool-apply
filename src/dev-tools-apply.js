@@ -1,7 +1,5 @@
 "use strict";
 
-const _ = require("lodash");
-
 const apply = require("./utils/apply");
 const moduleRegistry = require("./utils/moduleRegistry").moduleRegistry;
 const confirm = require("./utils/confirm");
@@ -9,11 +7,7 @@ const checkAndRemoveCommandOption = require("./utils/checkAndRemoveCommandOption
 
 const ApplyModule = apply.ApplyModule;
 
-moduleRegistry.loadExternalModules(process.cwd() + "/.dtarc.json");
-
-if (moduleRegistry.moduleNames().length === 0) {
-	moduleRegistry.loadExternalModules(require("os").homedir() + "/.dtarc.json");
-}
+moduleRegistry.initExternalModules();
 
 const moduleNames = moduleRegistry.moduleNames();
 const moduleNameList = `• ${moduleNames.join("\n• ")}`;
@@ -118,5 +112,11 @@ module.exports = {
 		} else {
 			devToolsApplyInternal.checkAndApplyModules(moduleNames, false);
 		}
+	},
+	init: function () {
+		moduleRegistry.initModules();
+	},
+	install: function (npmInstallOption) {
+		moduleRegistry.installModules(npmInstallOption);
 	}
 };

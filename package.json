@@ -16,8 +16,6 @@
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dta-modules-ci": "^1.0.0",
-    "dta-modules-qa": "^1.0.0",
     "json": "^9.0.6",
     "lodash": "^4.17.4",
     "preconditions": "^2.2.0",
@@ -29,7 +27,9 @@
     "config": ".eslintrc.js"
   },
   "devDependencies": {
-    "dta-modules-example-package": "./dta-modules-example-package",
+    "dta-modules-ci": "^1.1.1",
+    "dta-modules-example-package": "file:dta-modules-example-package",
+    "dta-modules-qa": "^1.0.2",
     "eclint": "^2.3.0",
     "eslint": "^4.7.2"
   }
