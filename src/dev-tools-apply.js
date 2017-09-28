@@ -5,6 +5,7 @@ const _ = require("lodash");
 const apply = require("./utils/apply");
 const moduleRegistry = require("./utils/moduleRegistry").moduleRegistry;
 const confirm = require("./utils/confirm");
+const checkAndRemoveCommandOption = require("./utils/checkAndRemoveCommandOption");
 
 const ApplyModule = apply.ApplyModule;
 
@@ -89,21 +90,18 @@ module.exports = {
 	run: function (command) {
 		console.log("dev-tool-apply\n");
 
-		const processArguments = process.argv;
-
-		if (processArguments.indexOf("--version") >= 0) {
+		if(checkAndRemoveCommandOption("--version")) {
 			console.log(require("../package.json").version);
 			return;
 		}
 
-		if (processArguments.indexOf("--help") >= 0) {
+		if(checkAndRemoveCommandOption("--help")) {
 			this.help();
 			return;
 		}
 
-		if (processArguments.indexOf("--silent") >= 0) {
+		if(checkAndRemoveCommandOption("--silent")) {
 			confirm.silent = true;
-			_.pull(processArguments, "--silent");
 		}
 
 		const commandFn = this[command];
