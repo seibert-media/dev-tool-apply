@@ -16,8 +16,8 @@
   "author": "Tilman Potthof <tilmanpotthof@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dta-modules-ci": "./dta-modules-ci",
-    "dta-modules-qa": "./dta-modules-qa",
+    "dta-modules-ci": "^1.0.0",
+    "dta-modules-qa": "^1.0.0",
     "json": "^9.0.6",
     "lodash": "^4.17.4",
     "preconditions": "^2.2.0",
