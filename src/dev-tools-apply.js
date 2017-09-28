@@ -10,6 +10,10 @@ const ApplyModule = apply.ApplyModule;
 
 moduleRegistry.loadExternalModules(process.cwd() + "/.dtarc.json");
 
+if (moduleRegistry.moduleNames().length === 0) {
+	moduleRegistry.loadExternalModules(require("os").homedir() + "/.dtarc.json");
+}
+
 const moduleNames = moduleRegistry.moduleNames();
 const moduleNameList = `• ${moduleNames.join("\n• ")}`;
 
