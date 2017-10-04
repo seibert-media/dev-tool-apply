@@ -3,11 +3,12 @@
 const apply = require("./utils/apply");
 const moduleRegistry = require("./utils/moduleRegistry").moduleRegistry;
 const confirm = require("./utils/confirm");
-const checkAndRemoveCommandOption = require("./utils/checkAndRemoveCommandOption");
+const checkCommandOption = require("./utils/checkCommandOption");
 
 const ApplyModule = apply.ApplyModule;
 
-moduleRegistry.initExternalModules();
+const ignoreUserConfig = checkCommandOption("--init", true) || checkCommandOption("install", true)
+moduleRegistry.initExternalModules(ignoreUserConfig);
 
 const moduleNames = moduleRegistry.moduleNames();
 const moduleNameList = `• ${moduleNames.join("\n• ")}`;
@@ -84,17 +85,17 @@ module.exports = {
 	run: function (command) {
 		console.log("dev-tool-apply\n");
 
-		if(checkAndRemoveCommandOption("--version")) {
+		if(checkCommandOption("--version")) {
 			console.log(require("../package.json").version);
 			return;
 		}
 
-		if(checkAndRemoveCommandOption("--help")) {
+		if(checkCommandOption("--help")) {
 			this.help();
 			return;
 		}
 
-		if(checkAndRemoveCommandOption("--silent")) {
+		if(checkCommandOption("--silent")) {
 			confirm.silent = true;
 		}
 
@@ -113,10 +114,10 @@ module.exports = {
 			devToolsApplyInternal.checkAndApplyModules(moduleNames, false);
 		}
 	},
-	init: function () {
+	"--init": function () {
 		moduleRegistry.initModules();
 	},
-	install: function (npmInstallOption) {
-		moduleRegistry.installModules(npmInstallOption);
+	install: function (npmInstallOption, ...parameterModuleNames) {
+		moduleRegistry.installModules(npmInstallOption, parameterModuleNames);
 	}
 };

@@ -6,6 +6,7 @@ const confirm = require("./confirm");
 
 const fs = require("fs");
 const path = require("path");
+const uniq = require("lodash").uniq;
 
 const modules = {};
 const configCache = {};
@@ -65,10 +66,10 @@ module.exports.moduleRegistry = {
 		configCache[dtaRcPath] = config;
 		return config;
 	},
-	initExternalModules: function () {
+	initExternalModules: function (skipUserRc = false) {
 		this.loadExternalModules(PROJECT_DTA_RC);
 
-		if (this.moduleNames().length === 0) {
+		if (!skipUserRc && this.moduleNames().length === 0) {
 			this.loadExternalModules(USER_DTA_RC);
 		}
 	},
@@ -95,9 +96,13 @@ module.exports.moduleRegistry = {
 			}
 		});
 	},
-	installModules: function (npmInstallOptions = "") {
+	installModules: function (npmInstallOptions = "", ...moduleNames) {
+		const hasModuleParams = !moduleNames || !moduleNames.length;
+		if (!hasModuleParams) {
+			moduleNames = this.config().modules;
+		}
 
-		this.config().modules.forEach(function (moduleName) {
+		moduleNames.forEach((moduleName) => {
 			const result = runCommand(`npm install ${npmInstallOptions} ${moduleName}`);
 			if (result.status) {
 				console.log(result.output);
@@ -106,6 +111,22 @@ module.exports.moduleRegistry = {
 				console.log(`Successfully installed '${moduleName}'`);
 			}
 		});
+
+		if (hasModuleParams) {
+			this.addModulesToConfig(moduleNames);
+		}
+	},
+	addModulesToConfig: function (moduleNames) {
+		const config = this.config(PROJECT_DTA_RC) || {
+			modules: []
+		};
+
+		config.modules.push(...moduleNames);
+
+		const dtaRcContent = JSON.stringify(config);
+
+		console.log(`\nWrite file '${PROJECT_DTA_RC.path}':\n\n${dtaRcContent}`);
+		fs.writeFileSync(PROJECT_DTA_RC.path, dtaRcContent);
 	},
 	initModules: function () {
 		if (PROJECT_DTA_RC.exists) {
@@ -120,11 +141,10 @@ module.exports.moduleRegistry = {
 		}
 
 		const foundModules = JSON.parse(result.output);
-		const moduleNames = foundModules.map((module) => module.name);
+		const moduleNames = uniq(foundModules.map((module) => module.name));
 
 		const selectedModuleNames = [];
 
-		moduleNames.push("dta-modules-seibert-media");
 		if (moduleNames.length === 0) {
 			console.log("No dta modules found in npm registry");
 			return;
@@ -137,5 +157,7 @@ module.exports.moduleRegistry = {
 				selectedModuleNames.push(moduleName);
 			}
 		});
+
+		this.addModulesToConfig(selectedModuleNames);
 	}
 };
