@@ -95,19 +95,23 @@ module.exports.moduleRegistry = {
 			}
 		});
 	},
-	installModules: function (npmInstallOptions = "", ...moduleNames) {
-		const hasModuleParams = !moduleNames || !moduleNames.length;
+	installModules: function (installGlobal, ...moduleNames) {
+		const hasModuleParams = moduleNames && moduleNames.length;
+
+		const npmInstallOption = installGlobal ? "--global" : "--save-dev";
+
 		if (!hasModuleParams) {
 			moduleNames = this.config().modules;
 		}
 
 		moduleNames.forEach((moduleName) => {
-			const result = runCommand(`npm install ${npmInstallOptions} ${moduleName}`);
+			const result = runCommand(`npm install ${npmInstallOption} ${moduleName}`);
 			if (result.status) {
 				console.log(result.output);
 				console.log(`Error installing the dta module: '${moduleName}'`);
 			} else {
 				console.log(`Successfully installed '${moduleName}'`);
+				console.log(result.output);
 			}
 		});
 
@@ -120,7 +124,7 @@ module.exports.moduleRegistry = {
 			modules: []
 		};
 
-		config.modules.push(...moduleNames);
+		config.modules = uniq(config.modules.concat(moduleNames));
 
 		const dtaRcContent = JSON.stringify(config);
 

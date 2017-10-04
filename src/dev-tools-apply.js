@@ -117,7 +117,16 @@ module.exports = {
 	"--init": function () {
 		moduleRegistry.initModules();
 	},
-	install: function (npmInstallOption, ...parameterModuleNames) {
-		moduleRegistry.installModules(npmInstallOption, parameterModuleNames);
+	install: function (...commandArguments) {
+		const installGlobal = checkCommandOption("--global", false, commandArguments);
+		const installSaveDev = checkCommandOption("--save-dev", false, commandArguments);
+
+		if (!installGlobal && !installSaveDev) {
+			console.error("Specify npm option --global or --save-dev");
+		} else if (installGlobal && installSaveDev) {
+			console.error("Specify exactly one npm option --global or --save-dev");
+		} else {
+			moduleRegistry.installModules(installGlobal, ...commandArguments);
+		}
 	}
 };

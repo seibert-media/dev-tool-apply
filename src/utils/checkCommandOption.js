@@ -2,8 +2,7 @@
 
 const pull = require("lodash").pull;
 
-module.exports = function checkCommandOption(argumentName, keepCommand = false) {
-	const processArguments = process.argv;
+module.exports = function checkCommandOption(argumentName, keepCommand = false, processArguments = process.argv) {
 
 	const parameterIsSet = processArguments.indexOf(argumentName) >= 0;
 
