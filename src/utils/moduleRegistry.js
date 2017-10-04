@@ -69,7 +69,7 @@ module.exports.moduleRegistry = {
 	initExternalModules: function (skipUserRc = false) {
 		this.loadExternalModules(PROJECT_DTA_RC);
 
-		if (!skipUserRc && this.moduleNames().length === 0) {
+		if (!skipUserRc) {
 			this.loadExternalModules(USER_DTA_RC);
 		}
 	},
@@ -91,8 +91,7 @@ module.exports.moduleRegistry = {
 				});
 
 			} catch(e) {
-				console.error(`\nModule '${moduleName}' configured in ${dtaRc.path} is not installed.\nRun: npm install <options> ${moduleName}`);
-				process.exit(e.code);
+				console.error(`\nWARN: Module '${moduleName}' configured in ${dtaRc.path} is not installed.\nRun: npm install <options> ${moduleName}\n`);
 			}
 		});
 	},
