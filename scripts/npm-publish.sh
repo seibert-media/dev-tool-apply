@@ -13,4 +13,4 @@ if [ $DIFF_STATUS != 0 ]; then
     exit $DIFF_STATUS
 fi
 
-npm publish --registry  https://nexus.apps.seibert-media.net/nexus/repository/npmtest/
+npm publish
