@@ -6,8 +6,9 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# exclude java and js until smart_tabs option is missiong
-[!*.{java,js}]
+# include file types explicitly
+# (NOT java and js because of issues with documentation indentation)
+[*.{css,html,less,md,soy,ts,vm,xml}]
 indent_style = space
 indent_size = 4
 
