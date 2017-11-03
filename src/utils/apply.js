@@ -4,83 +4,83 @@ const preconditions = require("preconditions").errr();
 const runCommand = require("./runCommand");
 
 const strategyClassByType = {
-	"command": require("./command-strategies/DefaultCommandStrategy"),
-	"npm-install": require("./command-strategies/NpmInstallStrategy"),
-	"npm-script": require("./command-strategies/NpmScriptStrategy"),
-	"initial-copy-from-modules": require("./command-strategies/InitialCopyFromModuleStrategy"),
-	"diff-copy-from-modules": require("./command-strategies/DiffCopyFromModuleStrategy")
+    "command": require("./command-strategies/DefaultCommandStrategy"),
+    "npm-install": require("./command-strategies/NpmInstallStrategy"),
+    "npm-script": require("./command-strategies/NpmScriptStrategy"),
+    "initial-copy-from-modules": require("./command-strategies/InitialCopyFromModuleStrategy"),
+    "diff-copy-from-modules": require("./command-strategies/DiffCopyFromModuleStrategy")
 };
 
 class ApplyStep {
-	constructor(applyStep, module) {
-		this.module = module;
+    constructor(applyStep, module) {
+        this.module = module;
 
-		preconditions.shouldBeString(applyStep.description).test();
-		this.description = applyStep.description;
+        preconditions.shouldBeString(applyStep.description).test();
+        this.description = applyStep.description;
 
-		const StrategyForType = strategyClassByType[applyStep.type];
-		preconditions.shouldBeDefined(StrategyForType, `No strategy found for type '${applyStep.type}'`).test();
-		this.commandStrategy = new StrategyForType(applyStep, this.module);
-	}
+        const StrategyForType = strategyClassByType[applyStep.type];
+        preconditions.shouldBeDefined(StrategyForType, `No strategy found for type '${applyStep.type}'`).test();
+        this.commandStrategy = new StrategyForType(applyStep, this.module);
+    }
 
-	check() {
-		const infoString = `${this.description} (${this.module.name})`;
-		const checkResult = this.commandStrategy.check();
+    check() {
+        const infoString = `${this.description} (${this.module.name})`;
+        const checkResult = this.commandStrategy.check();
 
-		if (checkResult) {
-			console.log(`✓ check successful - ${infoString}`);
-		} else {
-			console.log(`✗ check failed - ${infoString}`);
-		}
+        if (checkResult) {
+            console.log(`✓ check successful - ${infoString}`);
+        } else {
+            console.log(`✗ check failed - ${infoString}`);
+        }
 
-		return checkResult;
-	}
+        return checkResult;
+    }
 
-	apply() {
-		this.commandStrategy.apply();
-	}
+    apply() {
+        this.commandStrategy.apply();
+    }
 
-	save(silent) {
-		const changedFiles = this.commandStrategy.changedFiles();
-		if (!changedFiles) {
-			return;
-		}
-		const isUntrackedFile = runCommand(`git ls-files ${changedFiles}`).output.trim() === "";
-		if (silent || isUntrackedFile) {
-			runCommand(`git add ${changedFiles}`, "log");
-		} else {
-			runCommand(`git add -p ${changedFiles}`, "log");
-		}
-	}
+    save(silent) {
+        const changedFiles = this.commandStrategy.changedFiles();
+        if (!changedFiles) {
+            return;
+        }
+        const isUntrackedFile = runCommand(`git ls-files ${changedFiles}`).output.trim() === "";
+        if (silent || isUntrackedFile) {
+            runCommand(`git add ${changedFiles}`, "log");
+        } else {
+            runCommand(`git add -p ${changedFiles}`, "log");
+        }
+    }
 }
 
 class ApplyModule {
-	constructor(moduleDefinition) {
-		preconditions.shouldBeString(moduleDefinition.name).test();
-		this.name = moduleDefinition.name;
-		this.path = moduleDefinition.path;
+    constructor(moduleDefinition) {
+        preconditions.shouldBeString(moduleDefinition.name).test();
+        this.name = moduleDefinition.name;
+        this.path = moduleDefinition.path;
 
-		preconditions.shouldBeArray(moduleDefinition.applySteps).test();
-		this.applySteps = moduleDefinition.applySteps.map((applyStep) => {
-			return new ApplyStep(applyStep, this);
-		});
-	}
+        preconditions.shouldBeArray(moduleDefinition.applySteps).test();
+        this.applySteps = moduleDefinition.applySteps.map((applyStep) => {
+            return new ApplyStep(applyStep, this);
+        });
+    }
 
-	check() {
-		this.applySteps.forEach((applyStep) => {
-			applyStep.check();
-		});
-	}
+    check() {
+        this.applySteps.forEach((applyStep) => {
+            applyStep.check();
+        });
+    }
 
-	checkAndApply(failingCallback) {
-		this.applySteps.forEach((applyStep) => {
-			const success = applyStep.check();
+    checkAndApply(failingCallback) {
+        this.applySteps.forEach((applyStep) => {
+            const success = applyStep.check();
 
-			if (!success) {
-				failingCallback(applyStep);
-			}
-		});
-	}
+            if (!success) {
+                failingCallback(applyStep);
+            }
+        });
+    }
 }
 
 module.exports.ApplyStep = ApplyStep;
