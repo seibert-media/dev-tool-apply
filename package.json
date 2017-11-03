@@ -30,7 +30,6 @@
     "dta-modules-ci": "^1.1.1",
     "dta-modules-example-package": "file:dta-modules-example-package",
     "dta-modules-qa": "^1.0.3",
-    "dta-modules-seibert-media": "^1.0.1",
     "eclint": "^2.3.0",
     "eslint": "^4.7.2"
   }
